@@ -21,16 +21,13 @@ _database = None
 
 def start(bot, update):
     products = show_shop_products()
-    products_name = []
-    for product in products:
-        keyboard = [
-            InlineKeyboardButton(product['name'], callback_data=product['id']),
-        ]
-        products_name.append(keyboard)
-    products_name.append(
+    keyboard = [
+        [InlineKeyboardButton(product['name'], callback_data=product['id']),
+    ] for product in products]
+    keyboard.append(
         [InlineKeyboardButton('Корзина', callback_data='Корзина')]
     )
-    reply_markup = InlineKeyboardMarkup(products_name)
+    reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text('Please choose:', reply_markup=reply_markup)
     return 'HANDLE_MENU'
 
