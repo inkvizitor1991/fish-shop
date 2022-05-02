@@ -70,7 +70,7 @@ def handle_menu(bot, update):
         chat_id=query.message.chat_id,
         message_id=query.message.message_id
     )
-    return "HANDLE_DESCRIPTION"
+    return 'HANDLE_DESCRIPTION'
 
 
 def handle_description(bot, update):
@@ -98,7 +98,7 @@ def handle_description(bot, update):
             chat_id=query.message.chat_id,
             message_id=query.message.message_id
         )
-        return "HANDLE_DESCRIPTION"
+        return 'HANDLE_DESCRIPTION'
 
     if set(user_reply.split()) & {'1', '5', '10'}:
         quantity, product_id, product_name = user_reply.split()
@@ -107,7 +107,7 @@ def handle_description(bot, update):
             f"{product_name} в размере {quantity}кг успешно добавлен в корзину!",
             show_alert=True
         )
-    return "HANDLE_DESCRIPTION"
+    return 'HANDLE_DESCRIPTION'
 
 
 def handle_cart(bot, update):
@@ -139,7 +139,7 @@ def handle_cart(bot, update):
         chat_id=query.message.chat_id,
         message_id=query.message.message_id
     )
-    return "HANDLE_DESCRIPTION"
+    return 'HANDLE_DESCRIPTION'
 
 
 def waiting_email(bot, update):
@@ -165,7 +165,7 @@ def handle_users_reply(bot, update):
     elif user_reply == 'Корзина':
         user_state = 'HANDLE_CART'
     else:
-        user_state = db.get(chat_id).decode("utf-8")
+        user_state = db.get(chat_id).decode('utf-8')
 
     states_functions = {
         'START': start,
@@ -186,9 +186,9 @@ def handle_users_reply(bot, update):
 def get_database_connection():
     global _database
     if _database is None:
-        database_password = os.getenv("REDIS_DATABASE_PASSWORD")
-        database_host = os.getenv("REDIS_HOST")
-        database_port = os.getenv("REDIS_PORT")
+        database_password = os.getenv('REDIS_DATABASE_PASSWORD')
+        database_host = os.getenv('REDIS_HOST')
+        database_port = os.getenv('REDIS_PORT')
         _database = redis.Redis(
             host=database_host, port=database_port,
             password=database_password
@@ -198,7 +198,7 @@ def get_database_connection():
 
 if __name__ == '__main__':
     load_dotenv()
-    token = os.getenv("TG_BOT_TOKEN")
+    token = os.getenv('TG_BOT_TOKEN')
     logging.basicConfig(level=logging.ERROR)
     logger.setLevel(logging.DEBUG)
 

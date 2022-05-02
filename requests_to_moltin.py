@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 
 def create_token():
-    client_id = os.getenv("CLIENT_ID")
+    client_id = os.getenv('CLIENT_ID')
     url = 'https://api.moltin.com/oauth/access_token'
     data = {
         'client_id': client_id,
@@ -12,11 +12,12 @@ def create_token():
     }
 
     response = requests.post(url, data=data)
+    response.raise_for_status()
     return response.json()['access_token']
 
 
 def show_shop_products():
-    access_token = os.getenv("ACCESS_TOKEN")
+    access_token = os.getenv('ACCESS_TOKEN')
     url = 'https://api.moltin.com/v2/products'
 
     headers = {
@@ -30,7 +31,7 @@ def show_shop_products():
 
 
 def get_product(id):
-    access_token = os.getenv("ACCESS_TOKEN")
+    access_token = os.getenv('ACCESS_TOKEN')
     url = 'https://api.moltin.com/v2/products'
 
     headers = {
@@ -44,7 +45,7 @@ def get_product(id):
 
 
 def get_url_photo(photo_id):
-    access_token = os.getenv("ACCESS_TOKEN")
+    access_token = os.getenv('ACCESS_TOKEN')
     url = 'https://api.moltin.com/v2/files'
     headers = {
         'Authorization': f'Bearer {access_token}',
@@ -56,7 +57,7 @@ def get_url_photo(photo_id):
 
 
 def add_product_to_cart(chat_id, product_id, quantity):
-    access_token = os.getenv("ACCESS_TOKEN")
+    access_token = os.getenv('ACCESS_TOKEN')
     url = f'https://api.moltin.com/v2/carts/{chat_id}/items'
 
     headers = {
@@ -74,20 +75,19 @@ def add_product_to_cart(chat_id, product_id, quantity):
 
 
 def calculate_price(chat_id):
-    access_token = os.getenv("ACCESS_TOKEN")
+    access_token = os.getenv('ACCESS_TOKEN')
     url = f'https://api.moltin.com/v2/carts/{chat_id}'
     headers = {
         'Authorization': f'Bearer {access_token}',
     }
     response = requests.get(url, headers=headers)
     response.raise_for_status()
-    total_sum = response.json()['data']['meta']['display_price']['with_tax'][
-        'formatted']
+    total_sum = response.json()['data']['meta']['display_price']['with_tax']['formatted']
     return total_sum
 
 
 def show_cart(chat_id):
-    access_token = os.getenv("ACCESS_TOKEN")
+    access_token = os.getenv('ACCESS_TOKEN')
     url = f'https://api.moltin.com/v2/carts/{chat_id}/items'
     headers = {
         'Authorization': f'Bearer {access_token}',
@@ -100,7 +100,7 @@ def show_cart(chat_id):
 
 def delete_product_to_cart(chat_id, product_id):
     load_dotenv()
-    access_token = os.getenv("ACCESS_TOKEN")
+    access_token = os.getenv('ACCESS_TOKEN')
     url = f'https://api.moltin.com/v2/carts/{chat_id}/items/{product_id}'
     headers = {
         'Authorization': f'Bearer {access_token}',
@@ -110,17 +110,17 @@ def delete_product_to_cart(chat_id, product_id):
 
 
 def add_contact(chat_id, email):
-    access_token = os.getenv("ACCESS_TOKEN")
+    access_token = os.getenv('ACCESS_TOKEN')
     url = 'https://api.moltin.com/v2/customers'
     headers = {
         'Authorization': access_token,
     }
     json_data = {
         'data': {
-            "type": "customer",
-            "name": str(chat_id),
-            "email": email,
-            "delivery_details": "Do NOT leave in a government building"
+            'type': 'customer',
+            'name': str(chat_id),
+            'email': email,
+            'delivery_details': 'Do NOT leave in a government building'
         },
     }
 
