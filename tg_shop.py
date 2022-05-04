@@ -9,7 +9,7 @@ from telegram.ext import CallbackQueryHandler, CommandHandler, MessageHandler
 
 from requests_to_moltin import (
     get_shop_products, get_product, get_url_photo,
-    add_product_to_cart, show_cart, calculate_price,
+    add_product_to_cart, get_cart, calculate_price,
     delete_product_to_cart, add_contact
 )
 
@@ -110,7 +110,7 @@ def handle_description(bot, update):
 def handle_cart(bot, update):
     query = update.callback_query
     chat_id = update.callback_query.message.chat_id
-    products = show_cart(chat_id)
+    products = get_cart(chat_id)
     total_sum = calculate_price(chat_id)
     description_cart = ''
     products_name = []

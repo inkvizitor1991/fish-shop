@@ -47,4 +47,3 @@ python tg_shop.py
 - `REDIS_PORT` — порт от вашей базы данных [redis](https://redis.com/).
 - `REDIS_HOST` — адрес от вашей базы данных [redis](https://redis.com/).
 - `CLIENT_ID` — находится на главной странице [moltin](https://euwest.cm.elasticpath.com/), необходим единожды для создания `ACCESS_TOKEN`.
-- `ACCESS_TOKEN` — токен автоверификации. В файле: `requests_to_moltin.py`, вызовите функцию create_token, она сгенерирует вам токен. Убедитесь что `CLIENT_ID` заполнен.
