@@ -129,6 +129,3 @@ def add_contact(chat_id, email):
     return response.json()
 
 
-if __name__ == '__main__':
-    load_dotenv()
-
