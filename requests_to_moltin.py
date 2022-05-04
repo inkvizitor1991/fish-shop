@@ -16,7 +16,7 @@ def create_token():
     return response.json()['access_token']
 
 
-def show_shop_products():
+def get_shop_products():
     access_token = os.getenv('ACCESS_TOKEN')
     url = 'https://api.moltin.com/v2/products'
 

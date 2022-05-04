@@ -8,7 +8,7 @@ from telegram.ext import Filters, Updater
 from telegram.ext import CallbackQueryHandler, CommandHandler, MessageHandler
 
 from requests_to_moltin import (
-    show_shop_products, get_product, get_url_photo,
+    get_shop_products, get_product, get_url_photo,
     add_product_to_cart, show_cart, calculate_price,
     delete_product_to_cart, add_contact
 )
@@ -20,7 +20,7 @@ _database = None
 
 
 def start(bot, update):
-    products = show_shop_products()
+    products = get_shop_products()
     keyboard = [
         [InlineKeyboardButton(product['name'], callback_data=product['id']),
     ] for product in products]
