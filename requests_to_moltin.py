@@ -1,13 +1,18 @@
 import os
 import requests
 
+from datetime import datetime, timezone
+
+
 ACCESS_TOKEN = None
 
 
 def get_token():
     global ACCESS_TOKEN
     if ACCESS_TOKEN is None:
-        ACCESS_TOKEN = create_token()
+        ACCESS_TOKEN = create_token()['access_token']
+    elif datetime.now(timezone.utc).timestamp() >= create_token()['expires']:
+        ACCESS_TOKEN = create_token()['access_token']
     return ACCESS_TOKEN
 
 
@@ -21,7 +26,7 @@ def create_token():
 
     response = requests.post(url, data=data)
     response.raise_for_status()
-    return response.json()['access_token']
+    return response.json()
 
 
 def get_shop_products():
@@ -90,8 +95,7 @@ def calculate_price(chat_id):
     }
     response = requests.get(url, headers=headers)
     response.raise_for_status()
-    total_sum = response.json()['data']['meta']['display_price']['with_tax'][
-        'formatted']
+    total_sum = response.json()['data']['meta']['display_price']['with_tax']['formatted']
     return total_sum
 
 
