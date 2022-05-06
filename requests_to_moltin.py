@@ -3,15 +3,13 @@ import requests
 
 from datetime import datetime, timezone
 
-
 ACCESS_TOKEN = None
 
 
 def get_token():
     global ACCESS_TOKEN
-    if ACCESS_TOKEN is None:
-        ACCESS_TOKEN = create_token()['access_token']
-    elif datetime.now(timezone.utc).timestamp() >= create_token()['expires']:
+    if ACCESS_TOKEN is None or datetime.now(timezone.utc).timestamp() >= \
+            create_token()['expires']:
         ACCESS_TOKEN = create_token()['access_token']
     return ACCESS_TOKEN
 
@@ -95,7 +93,8 @@ def calculate_price(chat_id):
     }
     response = requests.get(url, headers=headers)
     response.raise_for_status()
-    total_sum = response.json()['data']['meta']['display_price']['with_tax']['formatted']
+    total_sum = response.json()['data']['meta']['display_price']['with_tax'][
+        'formatted']
     return total_sum
 
 
